@@ -171,8 +171,25 @@ jobs:
           git clone https://github.com/WildPlusKernel/AnyKernel3.git -b "$ANYKERNEL_BRANCH"
           git clone https://gitlab.com/simonpunk/susfs4ksu.git -b "$SUSFS_BRANCH"
           cd susfs4ksu
-          git checkout babf6be195576f09aae79650d47abf6a76e8a21b
+          FORMATTED_BRANCH="${{ inputs.android_version }}-${{ inputs.kernel_version }}"
+          # 判断条件
+          if [ "$FORMATTED_BRANCH" = "android12-5.10" ]; then
+              echo "Matched: android12-5.10"
+              git checkout 8a76ba240d1f7315352b49d97d854a4b166e5b47
+          elif [ "$FORMATTED_BRANCH" = "android13-5.15" ]; then
+              echo "Matched: android13-5.15"
+              git checkout babf6be195576f09aae79650d47abf6a76e8a21b
+          elif [ "$FORMATTED_BRANCH" = "android14-6.1" ]; then
+              echo "Matched: android14-6.1"
+              git checkout a162e2469d0b472545e5e46457eee171c0975fb0
+          elif [ "$FORMATTED_BRANCH" = "android15-6.6" ]; then
+              echo "Matched: android15-6.6"
+              git checkout f450ec00bf592d080f59b01ff6f9242456c9a427
+          else
+              echo "No match found."
+          fi
           cd ..
+          
           git clone https://github.com/WildPlusKernel/kernel_patches.git
           # Sukisu的补丁仓库
           git clone https://github.com/ShirkNeko/SukiSU_patch.git
@@ -299,12 +316,12 @@ jobs:
       - name: SUKISU管理器信息
         if: ${{ inputs.kernelsu_variant == 'SukiSU' }}
         run: |
-          # if [ ! -z "${{ vars.MANAGER_STR }}" ]; then
-          #   cd "$CONFIG"
-          #   cd ./KernelSU
-          #   sed -i 's|\$(shell cd \$(srctree)/\$(src); \$(GIT_BIN) rev-parse --short=8 HEAD)|${{ vars.MANAGER_STR }}|g' ./kernel/Makefile 
-          #   sed -n '50,60p' ./kernel/Makefile
-          # fi
+          if [ ! -z "${{ vars.MANAGER_STR }}" ]; then
+            cd "$CONFIG"
+            cd ./KernelSU
+            sed -i 's|\$(shell cd \$(srctree)/\$(src); \$(GIT_BIN) rev-parse --short=8 HEAD)|${{ vars.MANAGER_STR }}|g' ./kernel/Makefile 
+            sed -n '50,60p' ./kernel/Makefile
+          fi
 
       - name: 为 KernelSU 变体安装 SUSFS 补丁
         run: |
