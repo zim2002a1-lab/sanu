@@ -289,7 +289,7 @@ jobs:
             curl -LSs "https://raw.githubusercontent.com/5ec1cff/KernelSU/main/kernel/setup.sh" | bash $BRANCH
           elif [ "${{ inputs.kernelsu_variant }}" == "SukiSU" ]; then
             echo "Adding KernelSU SukiSU..."
-            curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s 343c6452cf84daaa1cfe44643505a09b61a7b762
+            curl -LSs "https://raw.githubusercontent.com/zzh20188/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-main
           fi
       
       - name: SUKISU管理器信息
