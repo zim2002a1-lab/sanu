@@ -176,6 +176,10 @@ jobs:
           git clone https://github.com/WildPlusKernel/kernel_patches.git
           # Sukisu的补丁仓库
           git clone https://github.com/ShirkNeko/SukiSU_patch.git
+          cd SukiSU_patch
+          git checkout 85f707b2b636d3fb5efdab6022f27235d95ff81d
+          cd ..
+          
           # next修复补丁
           git clone https://github.com/zzh20188/GKI_KernelSU_SUSFS.git zzh_patch
           
